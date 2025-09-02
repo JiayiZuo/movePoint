@@ -21,15 +21,15 @@ func main() {
 	}
 
 	// 初始化数据库
-	//dsn := os.Getenv("DB_DSN")
-	//if dsn == "" {
-	//	dsn = "user:password@tcp(127.0.0.1:3306)/climbing_app?charset=utf8mb4&parseTime=True&loc=Local"
-	//}
-	//
-	//err = database.InitDB(dsn)
-	//if err != nil {
-	//	log.Fatal("Failed to initialize database:", err)
-	//}
+	dsn := os.Getenv("DB_DSN")
+	if dsn == "" {
+		dsn = "root:123456@tcp(127.0.0.1:3306)/movepoint?charset=utf8mb4&parseTime=True&loc=Local"
+	}
+
+	err = database.InitDB(dsn)
+	if err != nil {
+		log.Fatal("Failed to initialize database:", err)
+	}
 
 	// 初始化服务
 	climbingService := services.NewClimbingService(database.DB)

@@ -13,9 +13,15 @@ type LoginRequest struct {
 
 // RegisterRequest 注册请求结构体
 type RegisterRequest struct {
-	Username string `json:"username" binding:"required,min=3,max=50"`
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=6"`
+	Username     string  `json:"username" binding:"required,min=3,max=20"`
+	Email        string  `json:"email" binding:"required,email"`
+	Password     string  `json:"password" binding:"required,min=6"`
+	BirthDate    string  `json:"birth_date"` // 格式: "2006-01-02"
+	Weight       float64 `json:"weight"`
+	Height       float64 `json:"height"`
+	AvatarURL    string  `json:"avatar_url"`
+	Bio          string  `json:"bio"`
+	Achievements string  `json:"achievements"` // JSON 字符串格式
 }
 
 // AuthResponse 认证响应结构体

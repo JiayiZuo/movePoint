@@ -30,7 +30,7 @@ type ClimbingRecord struct {
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
 
-	UserID uint `gorm:"not null;index" json:"user_id"`
+	UserID uint `gorm:"type:int unsigned;not null;index" json:"user_id"`
 
 	// 基本记录信息
 	Type      ClimbingType `gorm:"type:varchar(20);not null" json:"type"`

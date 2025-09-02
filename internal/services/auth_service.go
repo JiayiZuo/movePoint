@@ -2,6 +2,8 @@ package services
 
 import (
 	"errors"
+	"fmt"
+	"time"
 
 	"movePoint/internal/models"
 	"movePoint/pkg/utils"
@@ -30,11 +32,33 @@ func (s *AuthService) Register(req *models.RegisterRequest) (*models.AuthRespons
 		return nil, errors.New("用户名已被使用")
 	}
 
+	// 处理生日字段 - 如果是空字符串或无效日期，设置为 nil
+	var birthDatePtr *time.Time
+	if req.BirthDate != "" {
+		// 解析日期字符串
+		birthDate, err := time.Parse("2006-01-02", req.BirthDate)
+		if err != nil {
+			// 如果日期格式不正确，可以记录日志但继续注册流程
+			fmt.Printf("警告: 生日格式不正确: %s\n", req.BirthDate)
+			// 设置为 nil 而不是无效日期
+			birthDatePtr = nil
+		} else {
+			birthDatePtr = &birthDate
+		}
+	}
+
 	// 创建用户
 	user := models.User{
-		Username: req.Username,
-		Email:    req.Email,
-		Password: req.Password, // BeforeCreate钩子会自动加密
+		Username:  req.Username,
+		Email:     req.Email,
+		Password:  req.Password, // BeforeCreate钩子会自动加密
+		BirthDate: birthDatePtr,
+		// 可以设置其他字段的默认值
+		Weight:       0,
+		Height:       0,
+		AvatarURL:    "",
+		Bio:          "",
+		Achievements: "[]", // 默认空数组的 JSON 字符串
 	}
 
 	if err := s.db.Create(&user).Error; err != nil {

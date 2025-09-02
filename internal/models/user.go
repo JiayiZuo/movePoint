@@ -6,26 +6,22 @@ import (
 )
 
 type User struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
+	ID        uint           `gorm:"primaryKey;type:int unsigned" json:"id"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
 
-	Username string `gorm:"uniqueIndex;not null" json:"username"`
-	Email    string `gorm:"uniqueIndex;not null" json:"email"`
+	Username string `gorm:"uniqueIndex:idx_username,length:191;not null" json:"username"`
+	Email    string `gorm:"uniqueIndex:idx_email,length:191;not null" json:"email"`
 	Password string `gorm:"not null" json:"-"`
 
-	// 用户基本信息
-	Weight    float64   `json:"weight"` // 体重(kg)，用于计算热量消耗
-	Height    float64   `json:"height"` // 身高(cm)
-	BirthDate time.Time `json:"birth_date"`
-	AvatarURL string    `json:"avatar_url"`           // 头像URL
-	Bio       string    `gorm:"type:text" json:"bio"` // 个人简介
+	Weight       float64    `json:"weight"`
+	Height       float64    `json:"height"`
+	BirthDate    *time.Time `json:"birth_date"`
+	AvatarURL    string     `json:"avatar_url"`
+	Bio          string     `gorm:"type:text" json:"bio"`
+	Achievements string     `gorm:"type:text" json:"achievements"`
 
-	// 成就系统
-	Achievements string `gorm:"type:text" json:"achievements"` // JSON格式存储成就数据
-
-	// 关联关系
 	ClimbingRecords []ClimbingRecord `json:"climbing_records,omitempty"`
 }
 
