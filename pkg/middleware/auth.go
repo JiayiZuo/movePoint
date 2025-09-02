@@ -4,10 +4,12 @@ import (
 	"net/http"
 	"strings"
 
+	"movePoint/pkg/utils"
+
 	"github.com/gin-gonic/gin"
 )
 
-// AuthMiddleware 简单的认证中间件 (实际应用中应使用JWT等)
+// AuthMiddleware JWT认证中间件
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 从Header获取token
@@ -18,7 +20,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// 简单检查Bearer token格式
+		// 检查Bearer token格式
 		parts := strings.SplitN(authHeader, " ", 2)
 		if len(parts) != 2 || parts[0] != "Bearer" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "认证令牌格式错误"})
@@ -26,15 +28,20 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		//token := parts[1]
+		token := parts[1]
 
-		// 这里应该验证token的有效性并提取用户信息
-		// 简化处理: 假设token是用户ID
-		// userID, err := validateToken(token)
+		// 验证JWT令牌
+		claims, err := utils.ValidateJWT(token)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "无效的认证令牌"})
+			c.Abort()
+			return
+		}
 
-		// 示例: 直接将token作为用户ID (仅用于演示)
-		// 实际应用中应使用JWT等安全方案
-		c.Set("userID", uint(1)) // 示例用户ID
+		// 将用户信息存储到上下文中
+		c.Set("userID", claims.UserID)
+		c.Set("username", claims.Username)
+		c.Set("email", claims.Email)
 
 		c.Next()
 	}

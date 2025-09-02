@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"movePoint/internal/database"
 	"movePoint/internal/handlers"
@@ -20,7 +21,11 @@ func main() {
 	}
 
 	// 初始化数据库
-	//dsn := "user:password@tcp(127.0.0.1:3306)/climbing_app?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := os.Getenv("DB_DSN")
+	//if dsn == "" {
+	//	dsn = "user:password@tcp(127.0.0.1:3306)/climbing_app?charset=utf8mb4&parseTime=True&loc=Local"
+	//}
+	//
 	//err = database.InitDB(dsn)
 	//if err != nil {
 	//	log.Fatal("Failed to initialize database:", err)
@@ -30,22 +35,23 @@ func main() {
 	climbingService := services.NewClimbingService(database.DB)
 	analysisService := services.NewAnalysisService(database.DB)
 	userService := services.NewUserService(database.DB)
+	authService := services.NewAuthService(database.DB)
 
 	// 初始化处理器
 	climbingHandler := handlers.NewClimbingHandler(climbingService)
 	analysisHandler := handlers.NewAnalysisHandler(analysisService)
 	userHandler := handlers.NewUserHandler(userService)
+	authHandler := handlers.NewAuthHandler(authService)
 
 	// 设置路由
 	router := gin.Default()
 
-	// 公开路由
-	router.POST("/login", func(c *gin.Context) {
-		// 登录逻辑
-	})
-	router.POST("/register", func(c *gin.Context) {
-		// 注册逻辑
-	})
+	// 公开路由 - 无需认证
+	public := router.Group("/api")
+	{
+		public.POST("/register", authHandler.Register)
+		public.POST("/login", authHandler.Login)
+	}
 
 	// 需要认证的路由组
 	auth := router.Group("/api")
@@ -70,6 +76,11 @@ func main() {
 	}
 
 	// 启动服务器
-	log.Println("Server starting on :8080")
-	router.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Server starting on :%s", port)
+	router.Run(":" + port)
 }
