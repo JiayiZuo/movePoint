@@ -1,1 +1,47 @@
+```
+# WeChat Mini Program specific ignores
+miniprogram/.swan/
+miniprogram/dist/
+miniprogram/node_modules/
+
+# General ignores for mini program development
+*.log
+*.tmp
+*.swp
+
+# Environment files
 .env
+.env.local
+*.env.*
+
+# IDE files
+.vscode/
+.idea/
+*.swo
+*.swp
+
+# Build artifacts
+dist/
+build/
+*.o
+*.obj
+*.out
+
+# Dependencies
+node_modules/
+.npm/
+.yarn/
+.pnpm/
+
+# Python related (if any Python tools used in build process)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# System files
+.DS_Store
+Thumbs.db
+```
