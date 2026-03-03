@@ -1,0 +1,32 @@
+<view class="container">
+  <!-- 搜索和筛选 -->
+  <view class="filter-section">
+    <input class="search-input" placeholder="搜索标题或内容..." value="{{searchKeyword}}" bindinput="onSearchInput" />
+    <picker class="filter-picker" range="{{categories}}" bindchange="onFilterChange">
+      <view class="filter-text">分类: {{filterCategory}}</view>
+    </picker>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="records-list">
+    <view class="record-item" wx:for="{{filteredRecords}}" wx:key="id" bindtap="onRecordTap" data-id="{{item.id}}">
+      <view class="record-header">
+        <text class="record-title">{{item.title}}</text>
+        <text class="record-date">{{item.date}}</text>
+      </view>
+      <view class="record-content">{{item.content}}</view>
+      <view class="record-meta">
+        <text class="record-category">{{item.category}}</text>
+        <text class="record-priority">优先级: {{item.priority}}</text>
+      </view>
+    </view>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredRecords.length === 0}}">
+      <text>暂无记录</text>
+    </view>
+  </view>
+
+  <!-- 刷新按钮 -->
+  <button class="refresh-btn" bindtap="onRefresh">刷新</button>
+</view>

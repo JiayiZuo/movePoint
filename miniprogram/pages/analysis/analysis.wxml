@@ -1,0 +1,26 @@
+<view class="container">
+  <!-- 统计概览 -->
+  <view class="stats-overview">
+    <view class="stat-card">
+      <text class="stat-number">{{statistics.total}}</text>
+      <text class="stat-label">总记录数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{statistics.today}}</text>
+      <text class="stat-label">今日新增</text>
+    </view>
+  </view>
+
+  <!-- 图表区域 -->
+  <view class="chart-section" wx:for="{{chartData}}" wx:key="type">
+    <view class="section-title">{{item.title}}</view>
+    <view class="chart-item" wx:for="{{item.data}}" wx:key="name">
+      <view class="chart-label">{{item.name}}</view>
+      <progress class="chart-progress" percent="{{item.count * 100 / statistics.total}}" activeColor="#007AFF" />
+      <view class="chart-count">{{item.count}} 条</view>
+    </view>
+  </view>
+
+  <!-- 刷新按钮 -->
+  <button class="refresh-btn" bindtap="onRefresh">刷新数据</button>
+</view>
