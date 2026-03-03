@@ -1,31 +1,31 @@
 /* pages/profile/profile.wxss */
+
 .container {
   padding: 30rpx;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
   min-height: 100vh;
 }
 
 .user-info-section {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: white;
   border-radius: 20rpx;
   padding: 40rpx;
   margin-bottom: 30rpx;
-  color: white;
-  box-shadow: 0 8rpx 32rpx rgba(30, 60, 114, 0.3);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
 }
 
 .user-header {
   display: flex;
   align-items: center;
-  margin-bottom: 40rpx;
+  margin-bottom: 30rpx;
 }
 
 .avatar {
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  margin-right: 20rpx;
-  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  margin-right: 30rpx;
+  border: 6rpx solid #eef2f7;
 }
 
 .user-details {
@@ -36,14 +36,17 @@
   display: block;
   font-size: 36rpx;
   font-weight: bold;
+  color: #2c3e50;
   margin-bottom: 10rpx;
 }
 
 .level {
-  font-size: 28rpx;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 6rpx 16rpx;
-  border-radius: 20rpx;
+  display: inline-block;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  padding: 8rpx 20rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
 }
 
 .stats-grid {
@@ -53,32 +56,72 @@
 
 .stat-item {
   text-align: center;
-  padding: 20rpx;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12rpx;
   flex: 1;
-  margin: 0 10rpx;
 }
 
 .stat-number {
   display: block;
-  font-size: 32rpx;
+  font-size: 36rpx;
   font-weight: bold;
+  color: #1e3c72;
   margin-bottom: 8rpx;
 }
 
 .stat-label {
   font-size: 24rpx;
-  opacity: 0.8;
+  color: #6c757d;
+}
+
+.achievements-section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 20rpx;
+}
+
+.achievements-scroll {
+  white-space: nowrap;
+}
+
+.achievement-list {
+  display: inline-flex;
+}
+
+.achievement-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 40rpx;
+  min-width: 120rpx;
+}
+
+.achievement-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 10rpx;
+}
+
+.achievement-name {
+  font-size: 24rpx;
+  color: #6c757d;
+  text-align: center;
 }
 
 .login-prompt {
   background: white;
   border-radius: 20rpx;
-  padding: 80rpx 40rpx;
+  padding: 60rpx 40rpx;
   text-align: center;
   margin-bottom: 30rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
 }
 
 .login-icon {
@@ -90,7 +133,7 @@
 .login-text {
   display: block;
   font-size: 32rpx;
-  color: #666;
+  color: #2c3e50;
   margin-bottom: 40rpx;
 }
 
@@ -108,14 +151,14 @@
   background: white;
   border-radius: 20rpx;
   overflow: hidden;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.08);
 }
 
 .function-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rpx;
+  padding: 30rpx 40rpx;
   border-bottom: 1rpx solid #f0f0f0;
 }
 
@@ -125,10 +168,10 @@
 
 .function-text {
   font-size: 30rpx;
-  color: #333;
+  color: #2c3e50;
 }
 
 .arrow {
-  color: #ccc;
-  font-size: 32rpx;
+  color: #bdc3c7;
+  font-size: 36rpx;
 }

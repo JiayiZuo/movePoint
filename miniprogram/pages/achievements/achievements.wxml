@@ -1,0 +1,35 @@
+<!-- pages/achievements/achievements.wxml -->
+<view class="container">
+  <!-- 标题栏 -->
+  <view class="header">
+    <text class="title">我的成就</text>
+    <text class="subtitle">{{unlockedCount}}/{{totalCount}} 已解锁</text>
+  </view>
+
+  <!-- 成就列表 -->
+  <view class="achievements-container">
+    <view class="category-section">
+      <view class="category-title">攀登成就</view>
+      <view class="achievement-grid">
+        <view class="achievement-item {{item.completed ? 'unlocked' : 'locked'}}" 
+              wx:for="{{achievements}}" 
+              wx:for-item="item" 
+              wx:for-index="index" 
+              wx:key="index"
+              bindtap="onAchievementTap" 
+              data-index="{{index}}">
+          <image class="achievement-icon" src="{{item.icon}}" />
+          <text class="achievement-name">{{item.name}}</text>
+          <text class="achievement-desc">{{item.description}}</text>
+          <view class="achievement-progress" wx:if="{{!item.completed}}">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{item.progress}}%"></view>
+            </view>
+            <text class="progress-text">{{Math.round(item.progress)}}%</text>
+          </view>
+          <view class="unlocked-badge" wx:if="{{item.completed}}">已解锁</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -7,6 +7,15 @@ App({
   },
   
   onLaunch: function () {
+    // 初始化时从本地存储恢复登录状态
+    const token = wx.getStorageSync('token');
+    const userInfo = wx.getStorageSync('userInfo');
+    
+    if (token && userInfo) {
+      this.globalData.token = token;
+      this.globalData.userInfo = userInfo;
+    }
+
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -39,5 +48,31 @@ App({
         }
       }
     })
+  },
+  
+  // 全局登录状态管理方法
+  setGlobalUserInfo: function(userInfo) {
+    this.globalData.userInfo = userInfo;
+    wx.setStorageSync('userInfo', userInfo);
+  },
+  
+  setGlobalToken: function(token) {
+    this.globalData.token = token;
+    wx.setStorageSync('token', token);
+  },
+  
+  getGlobalToken: function() {
+    if (!this.globalData.token) {
+      this.globalData.token = wx.getStorageSync('token');
+    }
+    return this.globalData.token;
+  },
+  
+  clearGlobalAuth: function() {
+    this.globalData.userInfo = null;
+    this.globalData.token = null;
+    wx.removeStorageSync('userInfo');
+    wx.removeStorageSync('token');
+    wx.removeStorageSync('userStats');
   }
 })
