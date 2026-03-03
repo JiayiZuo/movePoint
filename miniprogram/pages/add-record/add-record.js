@@ -3,8 +3,10 @@ Page({
     title: '',
     content: '',
     grade: '5.8',
+    gradeIndex: 3, // 默认选择 '5.8' 在数组中的索引
     grades: ['5.5', '5.6', '5.7', '5.8', '5.9', '5.10a', '5.10b', '5.10c', '5.10d', '5.11a', '5.11b', '5.11c', '5.11d', '5.12a', '5.12b', '5.12c', '5.12d'],
     type: '抱石',
+    typeIndex: 0, // 默认选择 '抱石' 在数组中的索引
     types: ['抱石', '运动攀登', '传统攀登', '冰雪攀登', '室内攀岩', '户外自然岩壁'],
     date: new Date().toISOString().split('T')[0],
     duration: '',
@@ -26,14 +28,18 @@ Page({
   },
 
   onGradeChange(e) {
+    const index = parseInt(e.detail.value);
     this.setData({
-      grade: this.data.grades[e.detail.value]
+      grade: this.data.grades[index],
+      gradeIndex: index
     });
   },
 
   onTypeChange(e) {
+    const index = parseInt(e.detail.value);
     this.setData({
-      type: this.data.types[e.detail.value]
+      type: this.data.types[index],
+      typeIndex: index
     });
   },
 
