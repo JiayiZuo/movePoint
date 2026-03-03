@@ -32,6 +32,48 @@ type AuthResponse struct {
 	Token    string `json:"token"`
 }
 
+// WeChatLoginRequest 微信登录请求结构体
+type WeChatLoginRequest struct {
+	Code string `json:"code" binding:"required"` // 微信登录凭证
+}
+
+// WeChatUserInfo 微信用户信息
+type WeChatUserInfo struct {
+	OpenID    string `json:"openid"`
+	Nickname  string `json:"nickname"`
+	AvatarURL string `json:"headimgurl"`
+	Gender    int    `json:"sex"`
+	City      string `json:"city"`
+	Province  string `json:"province"`
+	Country   string `json:"country"`
+	UnionID   string `json:"unionid,omitempty"`
+}
+
+// WeChatAccessTokenResponse 微信获取access_token响应
+type WeChatAccessTokenResponse struct {
+	AccessToken  string `json:"access_token"`
+	ExpiresIn    int    `json:"expires_in"`
+	RefreshToken string `json:"refresh_token"`
+	OpenID       string `json:"openid"`
+	Scope        string `json:"scope"`
+	ErrCode      int    `json:"errcode,omitempty"`
+	ErrMsg       string `json:"errmsg,omitempty"`
+}
+
+// WeChatUserInfoResponse 微信获取用户信息响应
+type WeChatUserInfoResponse struct {
+	OpenID    string `json:"openid"`
+	Nickname  string `json:"nickname"`
+	AvatarURL string `json:"headimgurl"`
+	Gender    int    `json:"sex"`
+	City      string `json:"city"`
+	Province  string `json:"province"`
+	Country   string `json:"country"`
+	UnionID   string `json:"unionid,omitempty"`
+	ErrCode   int    `json:"errcode,omitempty"`
+	ErrMsg    string `json:"errmsg,omitempty"`
+}
+
 // HashPassword 使用bcrypt加密密码
 func (u *User) HashPassword(password string) error {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
