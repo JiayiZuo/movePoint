@@ -76,11 +76,17 @@ Page({
     }
 
     // 获取当前用户信息
-    const userInfo = wx.getStorageSync('userInfo');
-    if (!userInfo || !userInfo.openId) {
+    const app = getApp();
+    const token = app.getGlobalToken();
+    const userInfo = app.globalData.userInfo;
+    
+    if (!token || !userInfo || !userInfo.openId) {
       wx.showToast({
         title: '请先登录',
         icon: 'none'
+      });
+      wx.navigateTo({
+        url: '/pages/login/login'
       });
       return;
     }
@@ -100,24 +106,41 @@ Page({
       updateTime: new Date().toISOString()
     };
 
-    // 从本地存储获取现有记录
-    let records = wx.getStorageSync('climbing_records') || [];
-    
-    // 添加新记录
-    records.unshift(recordData);
-    
-    // 保存到本地存储
-    wx.setStorageSync('climbing_records', records);
+    // 发送到后端API保存
+    wx.request({
+      url: `${app.globalData.serverUrl}/api/climbing-records`,
+      method: 'POST',
+      data: recordData,
+      header: {
+        'Authorization': token,
+        'Content-Type': 'application/json'
+      },
+      success: (res) => {
+        if (res.statusCode === 200 || res.statusCode === 201) {
+          // 保存成功，显示提示
+          wx.showToast({
+            title: '攀岩记录保存成功',
+            icon: 'success'
+          });
 
-    // 显示成功提示
-    wx.showToast({
-      title: '攀岩记录保存成功',
-      icon: 'success'
+          // 返回上一页
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 1500);
+        } else {
+          wx.showToast({
+            title: res.data.error || '保存失败',
+            icon: 'none'
+          });
+        }
+      },
+      fail: (err) => {
+        console.error('保存记录失败:', err);
+        wx.showToast({
+          title: '网络错误，请重试',
+          icon: 'none'
+        });
+      }
     });
-
-    // 返回上一页
-    setTimeout(() => {
-      wx.navigateBack();
-    }, 1500);
   }
 })
