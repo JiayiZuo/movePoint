@@ -20,10 +20,11 @@ Page({
     const records = wx.getStorageSync('records') || [];
     const userInfo = wx.getStorageSync('userInfo');
     
+    // 如果未登录，不显示提示，只设置空数组
     if (!userInfo || !userInfo.openId) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
+      this.setData({
+        records: [],
+        filteredRecords: []
       });
       return;
     }

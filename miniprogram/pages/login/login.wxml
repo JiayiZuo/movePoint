@@ -6,8 +6,10 @@
     
     <!-- 微信登录按钮 -->
     <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">
-      <image src="/images/wechat-icon.png" class="wechat-icon"></image>
-      <text>微信一键登录</text>
+      <view class="wechat-login-content">
+        <image src="/images/wechat-icon.png" class="wechat-icon"></image>
+        <text class="wechat-login-text">微信一键登录</text>
+      </view>
     </button>
     
     <!-- 其他登录选项 -->
