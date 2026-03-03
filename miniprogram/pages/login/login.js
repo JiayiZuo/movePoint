@@ -20,7 +20,7 @@ Page({
         if (res.code) {
           // 请求后端登录接口
           wx.request({
-            url: `${getApp().globalData.serverUrl}/api/auth/login`,
+            url: `${getApp().globalData.serverUrl}/api/login`,
             method: 'POST',
             data: {
               code: res.code

@@ -3,7 +3,7 @@ App({
   globalData: {
     userInfo: null,
     token: null,
-    serverUrl: 'http://localhost:8080/api' // 后端API地址
+    serverUrl: 'http://172.19.21.157:8080' // 后端API地址
   },
   
   onLaunch: function () {
