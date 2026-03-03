@@ -12,15 +12,15 @@
 
     <view class="form-item">
       <text class="label">难度等级</text>
-      <picker class="picker" range="{{grades}}" bindchange="onGradeChange">
-        <view>{{grade}}</view>
+      <picker class="picker" range="{{grades}}" bindchange="onGradeChange" value="{{gradeIndex}}">
+        <view class="picker-view">{{grade}}</view>
       </picker>
     </view>
 
     <view class="form-item">
       <text class="label">攀岩类型</text>
-      <picker class="picker" range="{{types}}" bindchange="onTypeChange">
-        <view>{{type}}</view>
+      <picker class="picker" range="{{types}}" bindchange="onTypeChange" value="{{typeIndex}}">
+        <view class="picker-view">{{type}}</view>
       </picker>
     </view>
 
