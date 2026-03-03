@@ -30,9 +30,9 @@ Page({
             },
             success: (res) => {
               if (res.statusCode === 200) {
-                // 登录成功，保存token和用户信息
-                wx.setStorageSync('token', res.data.token);
-                wx.setStorageSync('userInfo', res.data);
+                // 登录成功，保存token和用户信息到全局
+                getApp().setGlobalToken(res.data.token);
+                getApp().setGlobalUserInfo(res.data);
 
                 // 显示登录成功提示
                 wx.showToast({
