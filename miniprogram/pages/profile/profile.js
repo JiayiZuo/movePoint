@@ -96,6 +96,19 @@ Page({
     });
   },
 
+  goToAchievements() {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (!userInfo || !userInfo.openId) {
+      wx.navigateTo({
+        url: '/pages/login/login'
+      });
+      return;
+    }
+    wx.navigateTo({
+      url: '/pages/achievements/achievements'
+    });
+  },
+
   checkAchievements() {
     const userInfo = wx.getStorageSync('userInfo');
     if (!userInfo || !userInfo.openId) {
