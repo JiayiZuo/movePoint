@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"gorm.io/gorm"
 	"movePoint/internal/models"
+
+	"gorm.io/gorm"
 )
 
 type UserService struct {

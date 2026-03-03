@@ -96,7 +96,7 @@ func (s *AuthService) Login(req *models.LoginRequest) (*models.AuthResponse, err
 	}
 
 	// 向微信服务器请求获取session_key和openid
-	weChatURL := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", 
+	weChatURL := fmt.Sprintf("https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
 		appID, appSecret, req.Code)
 
 	resp, err := http.Get(weChatURL)
@@ -134,10 +134,10 @@ func (s *AuthService) Login(req *models.LoginRequest) (*models.AuthResponse, err
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// 用户不存在，创建新用户
 			user := models.User{
-				Username:     fmt.Sprintf("wx_user_%s", weChatResp.OpenID[:8]), // 使用OpenID的一部分作为用户名
+				Username:     fmt.Sprintf("wx_user_%s", weChatResp.OpenID[:8]),     // 使用OpenID的一部分作为用户名
 				Email:        fmt.Sprintf("%s@wechat.user", weChatResp.OpenID[:8]), // 使用OpenID的一部分作为邮箱
-				Password:     "", // 微信登录用户不需要密码
-				WeChatOpenID: &weChatResp.OpenID, // 设置微信OpenID
+				Password:     "",                                                   // 微信登录用户不需要密码
+				WeChatOpenID: &weChatResp.OpenID,                                   // 设置微信OpenID
 				// 可以设置其他字段的默认值
 				Weight:       0,
 				Height:       0,
