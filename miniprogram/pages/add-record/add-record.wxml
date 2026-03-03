@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="form-item">
+    <text class="label">标题 *</text>
+    <input class="input" placeholder="请输入记录标题" value="{{title}}" bindinput="onTitleInput" />
+  </view>
+
+  <view class="form-item">
+    <text class="label">内容</text>
+    <textarea class="textarea" placeholder="请输入记录详情" value="{{content}}" bindinput="onContentInput" />
+  </view>
+
+  <view class="form-item">
+    <text class="label">分类</text>
+    <picker class="picker" range="{{categories}}" bindchange="onCategoryChange">
+      <view>{{category}}</view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <text class="label">日期</text>
+    <picker class="picker" mode="date" value="{{date}}" bindchange="onDateChange">
+      <view>{{date}}</view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <text class="label">时间</text>
+    <picker class="picker" mode="time" value="{{time}}" bindchange="onTimeChange">
+      <view>{{time}}</view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <text class="label">优先级</text>
+    <slider class="slider" min="0" max="2" step="1" value="{{priority-1}}" bindchange="onPriorityChange" show-value />
+  </view>
+
+  <button class="submit-btn" bindtap="saveRecord">保存记录</button>
+</view>
