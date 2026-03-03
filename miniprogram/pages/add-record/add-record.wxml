@@ -1,39 +1,46 @@
 <view class="container">
-  <view class="form-item">
-    <text class="label">标题 *</text>
-    <input class="input" placeholder="请输入记录标题" value="{{title}}" bindinput="onTitleInput" />
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">攀岩路线名称 *</text>
+      <input class="input" placeholder="请输入攀岩路线名称" value="{{title}}" bindinput="onTitleInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">攀岩体验</text>
+      <textarea class="textarea" placeholder="分享你的攀岩体验和感受" value="{{content}}" bindinput="onContentInput" maxlength="500" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">难度等级</text>
+      <picker class="picker" range="{{grades}}" bindchange="onGradeChange">
+        <view>{{grade}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">攀岩类型</text>
+      <picker class="picker" range="{{types}}" bindchange="onTypeChange">
+        <view>{{type}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">攀岩日期</text>
+      <picker class="picker" mode="date" value="{{date}}" bindchange="onDateChange">
+        <view>{{date}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">用时</text>
+      <input class="input" placeholder="请输入攀岩用时（分钟）" value="{{duration}}" type="digit" bindinput="onDurationInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">完成状态</text>
+      <switch class="switch" checked="{{completed}}" bindchange="onCompletedChange" />
+    </view>
   </view>
 
-  <view class="form-item">
-    <text class="label">内容</text>
-    <textarea class="textarea" placeholder="请输入记录详情" value="{{content}}" bindinput="onContentInput" />
-  </view>
-
-  <view class="form-item">
-    <text class="label">分类</text>
-    <picker class="picker" range="{{categories}}" bindchange="onCategoryChange">
-      <view>{{category}}</view>
-    </picker>
-  </view>
-
-  <view class="form-item">
-    <text class="label">日期</text>
-    <picker class="picker" mode="date" value="{{date}}" bindchange="onDateChange">
-      <view>{{date}}</view>
-    </picker>
-  </view>
-
-  <view class="form-item">
-    <text class="label">时间</text>
-    <picker class="picker" mode="time" value="{{time}}" bindchange="onTimeChange">
-      <view>{{time}}</view>
-    </picker>
-  </view>
-
-  <view class="form-item">
-    <text class="label">优先级</text>
-    <slider class="slider" min="0" max="2" step="1" value="{{priority-1}}" bindchange="onPriorityChange" show-value />
-  </view>
-
-  <button class="submit-btn" bindtap="saveRecord">保存记录</button>
+  <button class="submit-btn" bindtap="saveRecord">保存攀岩记录</button>
 </view>

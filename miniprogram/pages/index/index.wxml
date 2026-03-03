@@ -1,48 +1,71 @@
 <!-- pages/index/index.wxml -->
 <view class="container">
-  <!-- 用户信息区域 -->
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUseGetUserProfile}}" bindtap="getUserProfile" class="userinfo-nickname">
-      点击登录
-    </button>
-    <block wx:else>
-      <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-
-  <!-- 统计卡片 -->
-  <view class="stats-container">
-    <view class="stat-card">
-      <text class="stat-value">{{dailyStats.sessions}}</text>
-      <text class="stat-label">本周攀岩次数</text>
+  <!-- 头部区域 -->
+  <view class="header-section">
+    <view class="greeting">
+      <text class="greeting-text">欢迎回来</text>
+      <text class="user-name">{{userInfo.nickName || '攀岩者'}}</text>
     </view>
-    <view class="stat-card">
-      <text class="stat-value">{{dailyStats.duration}}h</text>
-      <text class="stat-label">累计时长</text>
-    </view>
-    <view class="stat-card">
-      <text class="stat-value">{{dailyStats.calories}}</text>
-      <text class="stat-label">卡路里</text>
+    
+    <!-- 攀岩成就统计 -->
+    <view class="achievement-stats">
+      <view class="stat-card climbing">
+        <text class="stat-value">{{dailyStats.sessions}}</text>
+        <text class="stat-label">本周攀岩</text>
+      </view>
+      <view class="stat-card duration">
+        <text class="stat-value">{{dailyStats.duration}}h</text>
+        <text class="stat-label">累计时长</text>
+      </view>
+      <view class="stat-card calories">
+        <text class="stat-value">{{dailyStats.calories}}</text>
+        <text class="stat-label">卡路里</text>
+      </view>
     </view>
   </view>
 
-  <!-- 快捷操作按钮 -->
-  <view class="quick-actions">
-    <button class="action-btn primary" bindtap="navigateToAddRecord">添加记录</button>
-    <button class="action-btn secondary" bindtap="navigateToAnalysis">查看分析</button>
-    <button class="action-btn secondary" bindtap="navigateToRecords">全部记录</button>
+  <!-- 快捷操作区域 -->
+  <view class="quick-actions-section">
+    <text class="section-title">快速操作</text>
+    <view class="quick-actions">
+      <button class="action-btn primary" bindtap="navigateToAddRecord">
+        <image src="/images/add-icon.png" class="action-icon"></image>
+        <text>添加记录</text>
+      </button>
+      <button class="action-btn secondary" bindtap="navigateToAnalysis">
+        <image src="/images/chart-icon.png" class="action-icon"></image>
+        <text>数据分析</text>
+      </button>
+      <button class="action-btn secondary" bindtap="navigateToRecords">
+        <image src="/images/list-icon.png" class="action-icon"></image>
+        <text>全部记录</text>
+      </button>
+    </view>
   </view>
 
-  <!-- 最近记录 -->
-  <view class="recent-records">
-    <text class="section-title">最近活动</text>
-    <view class="record-item" wx:for="{{recentRecords}}" wx:key="id">
-      <text>{{item.grade}} {{item.type}}</text>
-      <text>{{item.duration}}分钟</text>
+  <!-- 最近活动区域 -->
+  <view class="recent-activities-section">
+    <view class="section-header">
+      <text class="section-title">最近活动</text>
+      <text class="view-all" bindtap="navigateToRecords">查看全部</text>
     </view>
-    <view wx:if="{{recentRecords.length === 0}}" class="empty-tips">
-      暂无记录，快去添加第一条攀岩记录吧！
+    
+    <view class="recent-activities">
+      <view class="activity-item" wx:for="{{recentRecords}}" wx:key="id">
+        <view class="activity-info">
+          <text class="activity-grade">{{item.grade}}</text>
+          <text class="activity-type">{{item.type}}</text>
+        </view>
+        <view class="activity-time">
+          <text class="activity-duration">{{item.duration}}分钟</text>
+          <text class="activity-date">{{item.date}}</text>
+        </view>
+      </view>
+      
+      <view wx:if="{{recentRecords.length === 0}}" class="empty-state">
+        <image src="/images/empty-icon.png" class="empty-icon"></image>
+        <text class="empty-text">暂无记录，快去挑战新路线吧！</text>
+      </view>
     </view>
   </view>
 </view>
