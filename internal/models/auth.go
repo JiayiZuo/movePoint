@@ -7,8 +7,7 @@ import (
 
 // LoginRequest 登录请求结构体
 type LoginRequest struct {
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=6"`
+	Code string `json:"code" binding:"required"` // 微信登录凭证
 }
 
 // RegisterRequest 注册请求结构体
