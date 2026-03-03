@@ -1,18 +1,22 @@
 <!-- pages/login/login.wxml -->
 <view class="container">
   <view class="login-form">
-    <view class="title">登录</view>
+    <view class="title">欢迎使用</view>
+    <view class="subtitle">请登录以继续</view>
     
-    <view class="input-group">
-      <input type="text" placeholder="请输入邮箱" value="{{email}}" bindinput="onInputEmail" class="input" />
+    <!-- 微信登录按钮 -->
+    <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">
+      <image src="/images/wechat-icon.png" class="wechat-icon"></image>
+      <text>微信一键登录</text>
+    </button>
+    
+    <!-- 其他登录选项 -->
+    <view class="other-options">
+      <text class="option-text">其他登录方式</text>
+      <view class="divider"></view>
     </view>
     
-    <view class="input-group">
-      <input type="password" placeholder="请输入密码" value="{{password}}" bindinput="onInputPassword" class="input" />
-    </view>
-    
-    <button class="login-btn" bindtap="onLogin">登录</button>
-    
+    <!-- 注册链接 -->
     <view class="register-link">
       <text>还没有账号？</text>
       <text class="link" bindtap="navigateToRegister">立即注册</text>
