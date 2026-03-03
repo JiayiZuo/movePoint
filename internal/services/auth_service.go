@@ -85,45 +85,12 @@ func (s *AuthService) Register(req *models.RegisterRequest) (*models.AuthRespons
 	return response, nil
 }
 
-// Login 用户登录
+// Login 用户登录（微信小程序登录）
 func (s *AuthService) Login(req *models.LoginRequest) (*models.AuthResponse, error) {
-	// 根据邮箱查找用户
-	var user models.User
-	if err := s.db.Where("email = ?", req.Email).First(&user).Error; err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errors.New("邮箱或密码错误")
-		}
-		return nil, err
-	}
-
-	// 验证密码
-	if err := user.CheckPassword(req.Password); err != nil {
-		return nil, errors.New("邮箱或密码错误")
-	}
-
-	// 生成JWT令牌
-	token, err := utils.GenerateJWT(user.ID, user.Username, user.Email)
-	if err != nil {
-		return nil, err
-	}
-
-	// 返回认证响应
-	response := &models.AuthResponse{
-		UserID:   user.ID,
-		Username: user.Username,
-		Email:    user.Email,
-		Token:    token,
-	}
-
-	return response, nil
-}
-
-// WeChatLogin 微信登录
-func (s *AuthService) WeChatLogin(req *models.WeChatLoginRequest) (*models.AuthResponse, error) {
 	// 获取微信小程序配置
 	appID := utils.GetEnv("WECHAT_MINIAPP_APPID", "")
 	appSecret := utils.GetEnv("WECHAT_MINIAPP_SECRET", "")
-	
+
 	if appID == "" || appSecret == "" {
 		return nil, errors.New("微信小程序配置缺失")
 	}
@@ -218,4 +185,11 @@ func (s *AuthService) WeChatLogin(req *models.WeChatLoginRequest) (*models.AuthR
 
 		return response, nil
 	}
+}
+
+// WeChatLogin 微信登录（保留原方法，但实际业务逻辑已在Login中实现）
+func (s *AuthService) WeChatLogin(req *models.WeChatLoginRequest) (*models.AuthResponse, error) {
+	// 直接复用Login方法的逻辑
+	loginReq := &models.LoginRequest{Code: req.Code}
+	return s.Login(loginReq)
 }
