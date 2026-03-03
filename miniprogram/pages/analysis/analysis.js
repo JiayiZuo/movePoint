@@ -18,10 +18,16 @@ Page({
     const records = wx.getStorageSync('records') || [];
     const userInfo = wx.getStorageSync('userInfo');
     
+    // 如果未登录，不显示提示，只设置默认值
     if (!userInfo || !userInfo.openId) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'none'
+      this.setData({
+        statistics: {
+          total: 0,
+          today: 0,
+          categories: {},
+          priorities: {}
+        },
+        chartData: []
       });
       return;
     }

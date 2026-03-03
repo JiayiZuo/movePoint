@@ -8,93 +8,54 @@ Page({
   },
 
   onLoad() {
-    this.loadProfileData();
+    this.checkLoginStatus();
   },
 
   onShow() {
-    // 页面显示时刷新数据
-    this.loadProfileData();
+    // 页面显示时检查登录状态
+    this.checkLoginStatus();
   },
 
-  loadProfileData() {
-    const token = wx.getStorageSync('token');
-    if (!token) {
+  checkLoginStatus() {
+    // 检查本地是否有用户信息
+    const userInfo = wx.getStorageSync('userInfo');
+    if (!userInfo || !userInfo.openId) {
+      // 未登录，不执行后续操作，等待用户手动登录
+      this.setData({
+        profile: null
+      });
+      return;
+    }
+
+    // 已登录，加载用户数据
+    this.setData({
+      profile: userInfo,
+      stats: wx.getStorageSync('userStats') || {}
+    });
+  },
+
+  goToLogin() {
+    wx.navigateTo({
+      url: '/pages/login/login'
+    });
+  },
+
+  updateProfile() {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (!userInfo || !userInfo.openId) {
       wx.navigateTo({
         url: '/pages/login/login'
       });
       return;
     }
-
-    // 获取用户个人信息
-    wx.request({
-      url: `${getApp().globalData.serverUrl}/profile`,
-      method: 'GET',
-      header: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      success: (res) => {
-        if (res.statusCode === 200) {
-          this.setData({
-            profile: res.data
-          });
-        }
-      },
-      fail: (err) => {
-        console.error('获取用户信息失败:', err);
-      }
-    });
-
-    // 获取用户统计数据
-    wx.request({
-      url: `${getApp().globalData.serverUrl}/profile/stats`,
-      method: 'GET',
-      header: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      success: (res) => {
-        if (res.statusCode === 200) {
-          this.setData({
-            stats: res.data
-          });
-        }
-      },
-      fail: (err) => {
-        console.error('获取统计信息失败:', err);
-      }
-    });
-
-    // 获取用户成就
-    wx.request({
-      url: `${getApp().globalData.serverUrl}/profile/achievements`,
-      method: 'GET',
-      header: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      success: (res) => {
-        if (res.statusCode === 200) {
-          this.setData({
-            achievements: res.data
-          });
-        }
-      },
-      fail: (err) => {
-        console.error('获取成就失败:', err);
-      }
-    });
-  },
-
-  updateProfile() {
     wx.navigateTo({
       url: '/pages/update-profile/update-profile'
     });
   },
 
   checkAchievements() {
-    const token = wx.getStorageSync('token');
-    if (!token) {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (!userInfo || !userInfo.openId) {
       wx.navigateTo({
         url: '/pages/login/login'
       });
@@ -106,7 +67,7 @@ Page({
       url: `${getApp().globalData.serverUrl}/profile/check-achievements`,
       method: 'POST',
       header: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': wx.getStorageSync('token'),
         'Content-Type': 'application/json'
       },
       success: (res) => {
@@ -116,7 +77,7 @@ Page({
             icon: 'success'
           });
           // 重新加载成就数据
-          this.loadProfileData();
+          this.checkLoginStatus();
         }
       },
       fail: (err) => {
