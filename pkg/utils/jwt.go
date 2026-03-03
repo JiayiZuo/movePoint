@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 )
 
 // JWTClaims JWT声明结构体
@@ -79,4 +80,16 @@ func ValidateJWT(tokenString string) (*JWTClaims, error) {
 	}
 
 	return nil, fmt.Errorf("invalid token")
+}
+
+// GetEnv 获取环境变量，如果未设置则返回默认值
+func GetEnv(key, defaultValue string) string {
+	// 尝试加载 .env 文件
+	_ = godotenv.Load()
+	
+	value := os.Getenv(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
 }

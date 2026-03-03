@@ -22,6 +22,9 @@ type User struct {
 	Bio          string     `gorm:"type:text" json:"bio"`
 	Achievements string     `gorm:"type:text" json:"achievements"`
 
+	// 微信相关字段
+	WeChatOpenID *string `gorm:"uniqueIndex:idx_wechat_openid,length:191" json:"wechat_openid,omitempty"`
+
 	ClimbingRecords []ClimbingRecord `json:"climbing_records,omitempty"`
 }
 
