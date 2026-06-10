@@ -8,7 +8,8 @@ Page({
     avatarLetter: 'M',
     user: {},
     profile: {},
-    achievements: [],
+    birthDateText: '',
+    editing: false,
     saving: false,
     form: {
       avatar_url: '',
@@ -28,23 +29,36 @@ Page({
   },
 
   async loadProfile() {
-    const [profile, achievements] = await Promise.all([
-      api.getProfile(),
-      api.getAchievements()
-    ])
+    const profile = await api.getProfile()
+    const birthDateText = formatDate(profile.birth_date)
     this.setData({
       user: wx.getStorageSync('user') || {},
       profile,
+      birthDateText,
       avatarLetter: (profile.username || 'M').slice(0, 1).toUpperCase(),
-      achievements: (achievements || []).map((item) => ({
-        ...item,
-        progress: Math.round(item.progress || 0)
-      })),
       form: {
         avatar_url: profile.avatar_url || '',
         weight: profile.weight || '',
         height: profile.height || '',
-        birth_date: formatDate(profile.birth_date),
+        birth_date: birthDateText,
+        bio: profile.bio || ''
+      }
+    })
+  },
+
+  startEdit() {
+    this.setData({ editing: true })
+  },
+
+  cancelEdit() {
+    const profile = this.data.profile
+    this.setData({
+      editing: false,
+      form: {
+        avatar_url: profile.avatar_url || '',
+        weight: profile.weight || '',
+        height: profile.height || '',
+        birth_date: this.data.birthDateText,
         bio: profile.bio || ''
       }
     })
@@ -70,16 +84,15 @@ Page({
         bio: form.bio
       })
       wx.showToast({ title: '已保存' })
-      this.loadProfile()
+      this.setData({ editing: false })
+      await this.loadProfile()
     } finally {
       this.setData({ saving: false })
     }
   },
 
-  async checkAchievements() {
-    await api.checkAchievements()
-    wx.showToast({ title: '已刷新' })
-    this.loadProfile()
+  goAchievements() {
+    wx.navigateTo({ url: '/pages/achievements/achievements' })
   },
 
   logout() {

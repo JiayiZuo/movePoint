@@ -1,12 +1,23 @@
 <view class="page records-page">
-  <view class="toolbar">
+  <view class="records-head section">
+    <view>
+      <view class="title">训练记录</view>
+      <view class="subtitle">按日期回看训练量、路线难度和完成情况。</view>
+    </view>
+    <button class="add-record-button" bindtap="addRecord">
+      <text class="add-icon">+</text>
+      <text>添加记录</text>
+    </button>
+  </view>
+
+  <view class="filter-panel section">
     <picker mode="date" value="{{from}}" bindchange="onFilterDate" data-field="from">
       <view class="filter">{{from || '开始日期'}}</view>
     </picker>
     <picker mode="date" value="{{to}}" bindchange="onFilterDate" data-field="to">
       <view class="filter">{{to || '结束日期'}}</view>
     </picker>
-    <button class="add" bindtap="addRecord">+</button>
+    <button class="reset-filter" bindtap="resetFilter">重置</button>
   </view>
 
   <view wx:if="{{records.length}}">
@@ -21,7 +32,11 @@
       <view class="meta">{{item.typeText}} · {{item.attemptsText}} · {{item.durationText}} · {{item.startText}}</view>
     </view>
   </view>
-  <view wx:else class="panel empty">没有符合条件的记录。</view>
+  <view wx:else class="panel empty-state">
+    <view class="empty-title">这里还没有记录</view>
+    <view class="empty-copy">添加训练后，可以用日期筛选回看某段时间的攀爬状态。</view>
+    <button class="button-primary empty-action" bindtap="addRecord">添加记录</button>
+  </view>
 
   <view wx:if="{{hasMore}}" class="load-more" bindtap="loadMore">加载更多</view>
 </view>

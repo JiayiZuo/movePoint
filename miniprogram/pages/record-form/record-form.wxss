@@ -1,7 +1,149 @@
+.record-form-page {
+  padding-bottom: 56rpx;
+}
+
+.form-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+}
+
+.duration-badge {
+  flex-shrink: 0;
+  width: 140rpx;
+  min-height: 108rpx;
+  box-sizing: border-box;
+  padding: 18rpx 10rpx;
+  border-radius: 14rpx;
+  background: #2f8fe8;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 14rpx 28rpx rgba(47, 143, 232, 0.22);
+}
+
+.duration-label {
+  display: block;
+  margin-top: 6rpx;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
 .two-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16rpx;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10rpx;
+  padding: 8rpx;
+  border-radius: 12rpx;
+  background: #e2f1ff;
+}
+
+.segment {
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 10rpx;
+  color: #5f7894;
+  text-align: center;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.segment.active {
+  background: #2f8fe8;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.select-chip {
+  min-width: 72rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  box-sizing: border-box;
+  padding: 0 18rpx;
+  border-radius: 10rpx;
+  background: #e2f1ff;
+  color: #263f58;
+  font-size: 24rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+.select-chip.selected {
+  background: #2f8fe8;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.color-row {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 18rpx;
+}
+
+.color-dot {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  border: 4rpx solid #ffffff;
+  box-shadow: 0 0 0 1rpx #b8cadb;
+}
+
+.selected-dot {
+  box-shadow: 0 0 0 5rpx #2f8fe8;
+}
+
+.inline-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hint {
+  margin-top: 6rpx;
+  color: #6f8399;
+  font-size: 23rpx;
+}
+
+.rating-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12rpx;
+}
+
+.rating {
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 10rpx;
+  background: #e2f1ff;
+  color: #263f58;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.rating.active {
+  background: #2f8fe8;
+  color: #ffffff;
+}
+
+.bottom-actions {
+  margin-top: 8rpx;
 }
 
 .delete-btn {

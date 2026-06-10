@@ -6,6 +6,10 @@
   margin-bottom: 48rpx;
 }
 
+.brand .title {
+  font-size: 56rpx;
+}
+
 .register-link {
   margin-top: 20rpx;
 }

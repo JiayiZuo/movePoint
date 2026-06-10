@@ -1,0 +1,35 @@
+<view class="page achievements-page">
+  <view class="section">
+    <view class="title">我的成就</view>
+    <view class="subtitle">训练次数、频率和难度进步会在这里沉淀下来。</view>
+  </view>
+
+  <view class="panel section">
+    <view class="row between section-title-row">
+      <view class="section-title">成就进度</view>
+      <view class="link" bindtap="checkAchievements">刷新</view>
+    </view>
+
+    <view wx:if="{{achievements.length}}">
+      <view class="achievement" wx:for="{{achievements}}" wx:key="id">
+        <view class="achievement-icon">{{item.icon || '★'}}</view>
+        <view class="achievement-body">
+          <view class="row between">
+            <text class="achievement-name">{{item.name}}</text>
+            <text class="progress-text">{{item.progress}}%</text>
+          </view>
+          <view class="muted description">{{item.description}}</view>
+          <view class="progress">
+            <view class="progress-fill" style="width: {{item.progress}}%;"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <view class="empty-title">暂无成就</view>
+      <view class="empty-copy">点一下刷新，系统会根据你的训练记录初始化成就进度。</view>
+      <button class="button-primary empty-action" bindtap="checkAchievements">刷新成就</button>
+    </view>
+  </view>
+</view>

@@ -5,18 +5,19 @@
     "pages/record-form/record-form",
     "pages/analysis/analysis",
     "pages/profile/profile",
+    "pages/achievements/achievements",
     "pages/login/login",
     "pages/register/register"
   ],
   "window": {
     "navigationBarTitleText": "MovePoint",
-    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#d7edff",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#f6f7f9"
+    "backgroundColor": "#eef7ff"
   },
   "tabBar": {
-    "color": "#7a8492",
-    "selectedColor": "#1e6b58",
+    "color": "#6f8399",
+    "selectedColor": "#2f8fe8",
     "backgroundColor": "#ffffff",
     "borderStyle": "black",
     "list": [

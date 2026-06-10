@@ -1,10 +1,25 @@
-<view class="page">
+<view class="page dashboard-page">
   <view class="section hero">
     <view>
       <view class="subtitle">欢迎回来</view>
       <view class="title">{{profile.username || user.username || '攀岩者'}}</view>
     </view>
-    <button class="quick-add" bindtap="addRecord">+</button>
+    <button class="add-record-button" bindtap="addRecord">
+      <text class="add-icon">+</text>
+      <text>添加记录</text>
+    </button>
+  </view>
+
+  <view class="training-card section">
+    <view class="training-content">
+      <view class="training-kicker">QUICK LOG</view>
+      <view class="training-title">今天爬了吗？</view>
+      <view class="training-copy">快速记一次训练，之后再慢慢补细节。</view>
+    </view>
+    <view class="quick-actions">
+      <button class="quick-action primary" bindtap="quickAdd" data-type="bouldering">抱石</button>
+      <button class="quick-action" bindtap="quickAdd" data-type="sport_climbing">难度</button>
+    </view>
   </view>
 
   <view class="stats-grid section">
@@ -43,5 +58,9 @@
       <view class="record-meta">{{item.startText}} · {{item.durationText}}</view>
     </view>
   </view>
-  <view wx:else class="panel empty">还没有记录，先添加一次攀爬。</view>
+  <view wx:else class="panel empty-state">
+    <view class="empty-title">还没有训练记录</view>
+    <view class="empty-copy">从一次抱石或一次难度训练开始，慢慢就能看到自己的路线、强度和进步。</view>
+    <button class="button-primary empty-action" bindtap="addRecord">添加第一条记录</button>
+  </view>
 </view>

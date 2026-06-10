@@ -1,14 +1,24 @@
 page {
   min-height: 100%;
-  background: #f6f7f9;
-  color: #1f2933;
+  background: #eef7ff;
+  color: #102033;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+button {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button::after {
+  border: 0;
 }
 
 .page {
   min-height: 100vh;
   box-sizing: border-box;
   padding: 28rpx;
+  background: linear-gradient(180deg, #d7edff 0%, #eef7ff 360rpx, #f7fbff 360rpx, #f7fbff 100%);
 }
 
 .section {
@@ -17,20 +27,22 @@ page {
 
 .panel {
   background: #ffffff;
-  border: 1rpx solid #e7eaee;
-  border-radius: 12rpx;
+  border: 1rpx solid #d7e7f5;
+  border-radius: 14rpx;
   padding: 28rpx;
+  box-shadow: 0 16rpx 40rpx rgba(45, 108, 166, 0.08);
 }
 
 .title {
-  font-size: 42rpx;
-  font-weight: 700;
-  line-height: 1.25;
+  color: #102033;
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.22;
 }
 
 .subtitle {
   margin-top: 8rpx;
-  color: #697586;
+  color: #5f7894;
   font-size: 26rpx;
 }
 
@@ -44,7 +56,7 @@ page {
 }
 
 .muted {
-  color: #697586;
+  color: #6f8399;
 }
 
 .button-primary,
@@ -52,23 +64,24 @@ page {
 .button-danger {
   height: 84rpx;
   line-height: 84rpx;
-  border-radius: 10rpx;
+  border-radius: 12rpx;
   font-size: 30rpx;
+  font-weight: 700;
 }
 
 .button-primary {
   color: #ffffff;
-  background: #1e6b58;
+  background: #2f8fe8;
 }
 
 .button-secondary {
-  color: #1e6b58;
-  background: #e8f3ef;
+  color: #2473ba;
+  background: #e2f1ff;
 }
 
 .button-danger {
-  color: #b42318;
-  background: #fff1f0;
+  color: #ffffff;
+  background: #d84f5f;
 }
 
 .input,
@@ -77,9 +90,10 @@ page {
   min-height: 84rpx;
   box-sizing: border-box;
   padding: 22rpx 24rpx;
-  border: 1rpx solid #d9dee5;
-  border-radius: 10rpx;
+  border: 1rpx solid #cfe0ef;
+  border-radius: 12rpx;
   background: #ffffff;
+  color: #102033;
   font-size: 28rpx;
 }
 
@@ -95,13 +109,14 @@ page {
 .label {
   display: block;
   margin-bottom: 12rpx;
-  color: #344054;
+  color: #263f58;
   font-size: 26rpx;
+  font-weight: 700;
 }
 
 .empty {
   padding: 72rpx 24rpx;
-  color: #7a8492;
+  color: #6f8399;
   text-align: center;
 }
 
@@ -110,7 +125,8 @@ page {
   align-items: center;
   padding: 8rpx 16rpx;
   border-radius: 999rpx;
-  background: #eef2f6;
-  color: #344054;
+  background: #e2f1ff;
+  color: #2473ba;
   font-size: 24rpx;
+  font-weight: 700;
 }

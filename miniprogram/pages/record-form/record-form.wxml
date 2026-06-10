@@ -1,15 +1,34 @@
-<view class="page">
-  <view class="section">
-    <view class="title">{{id ? '编辑记录' : '新增记录'}}</view>
-    <view class="subtitle">时长和热量由后端根据开始、结束时间自动计算。</view>
+<view class="page record-form-page">
+  <view class="section form-head">
+    <view>
+      <view class="title">{{id ? '编辑记录' : '新增记录'}}</view>
+      <view class="subtitle">把训练记下来，难度、尝试次数和感受以后会很有用。</view>
+    </view>
+    <view class="duration-badge">
+      <text>{{durationPreview}}</text>
+      <text class="duration-label">预计时长</text>
+    </view>
   </view>
 
-  <view class="panel">
+  <view class="panel section">
     <view class="field">
-      <text class="label">类型</text>
-      <picker range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange">
-        <view class="picker-box">{{typeOptions[typeIndex].label}}</view>
-      </picker>
+      <text class="label">训练类型</text>
+      <view class="segmented">
+        <view
+          class="segment {{typeIndex === index ? 'active' : ''}}"
+          wx:for="{{typeOptions}}"
+          wx:key="value"
+          bindtap="selectType"
+          data-index="{{index}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="label">快捷时长</text>
+      <view class="chip-row">
+        <view class="select-chip" wx:for="{{durationOptions}}" wx:key="value" bindtap="applyDuration" data-minutes="{{item.value}}">{{item.label}}</view>
+      </view>
     </view>
 
     <view class="field two-col">
@@ -41,15 +60,29 @@
         </picker>
       </view>
     </view>
+  </view>
 
-    <view class="field two-col">
-      <view>
-        <text class="label">难度</text>
-        <input class="input" placeholder="V4 / 5.11a" value="{{form.grade}}" bindinput="onInput" data-field="grade" />
+  <view class="panel section">
+    <view class="field">
+      <text class="label">难度</text>
+      <input class="input" placeholder="{{typeOptions[typeIndex].placeholder}}" value="{{form.grade}}" bindinput="onInput" data-field="grade" />
+      <view class="chip-row">
+        <view class="select-chip {{form.grade === item ? 'selected' : ''}}" wx:for="{{gradeSuggestions}}" wx:key="*this" bindtap="pickGrade" data-value="{{item}}">{{item}}</view>
       </view>
-      <view>
-        <text class="label">线路颜色</text>
-        <input class="input" placeholder="蓝色" value="{{form.color}}" bindinput="onInput" data-field="color" />
+    </view>
+
+    <view class="field">
+      <text class="label">线路颜色</text>
+      <input class="input" placeholder="例如 蓝色 / 红色" value="{{form.color}}" bindinput="onInput" data-field="color" />
+      <view class="color-row">
+        <view
+          class="color-dot {{form.color === item.name ? 'selected-dot' : ''}}"
+          wx:for="{{colorOptions}}"
+          wx:key="name"
+          style="background: {{item.hex}};"
+          bindtap="pickColor"
+          data-value="{{item.name}}"
+        ></view>
       </view>
     </view>
 
@@ -60,16 +93,23 @@
       </picker>
     </view>
 
-    <view class="field">
-      <text class="label">是否完成</text>
+    <view class="field inline-field">
+      <view>
+        <text class="label">是否完成</text>
+        <view class="hint">关闭后会自动标记为未完成。</view>
+      </view>
       <switch checked="{{form.success}}" bindchange="onSwitch" />
     </view>
 
     <view class="field">
-      <text class="label">评分</text>
-      <slider min="1" max="5" step="1" value="{{form.rating}}" show-value bindchange="onSlider" />
+      <text class="label">体感评分</text>
+      <view class="rating-row">
+        <view class="rating {{form.rating === item ? 'active' : ''}}" wx:for="{{ratingOptions}}" wx:key="*this" bindtap="pickRating" data-value="{{item}}">{{item}}</view>
+      </view>
     </view>
+  </view>
 
+  <view class="panel section">
     <view class="field">
       <text class="label">地点</text>
       <input class="input" placeholder="岩馆或户外地点" value="{{form.location}}" bindinput="onInput" data-field="location" />
@@ -77,10 +117,15 @@
 
     <view class="field">
       <text class="label">备注</text>
-      <textarea class="textarea" placeholder="动作、感受、beta..." value="{{form.notes}}" bindinput="onInput" data-field="notes" />
+      <textarea class="textarea" placeholder="动作、感受、beta、训练状态..." value="{{form.notes}}" bindinput="onInput" data-field="notes" />
+      <view class="chip-row">
+        <view class="select-chip" wx:for="{{noteTemplates}}" wx:key="*this" bindtap="appendNote" data-value="{{item}}">{{item}}</view>
+      </view>
     </view>
+  </view>
 
-    <button class="button-primary" loading="{{loading}}" bindtap="submit">保存</button>
+  <view class="bottom-actions">
+    <button class="button-primary" loading="{{loading}}" bindtap="submit">保存记录</button>
     <button wx:if="{{id}}" class="button-danger delete-btn" bindtap="remove">删除记录</button>
   </view>
 </view>

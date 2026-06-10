@@ -1,61 +1,76 @@
-<view class="page">
+<view class="page profile-page">
   <view class="panel profile-head section">
     <image wx:if="{{profile.avatar_url}}" class="avatar" src="{{profile.avatar_url}}" mode="aspectFill" />
     <view wx:else class="avatar avatar-fallback">{{avatarLetter}}</view>
-    <view>
+    <view class="profile-main">
       <view class="name">{{profile.username || user.username}}</view>
       <view class="muted">{{profile.email || user.email}}</view>
     </view>
   </view>
 
   <view class="panel section">
-    <view class="section-title">个人资料</view>
-    <view class="field">
-      <text class="label">头像 URL</text>
-      <input class="input" value="{{form.avatar_url}}" bindinput="onInput" data-field="avatar_url" />
-    </view>
-    <view class="field two-col">
-      <view>
-        <text class="label">体重 kg</text>
-        <input class="input" type="digit" value="{{form.weight}}" bindinput="onInput" data-field="weight" />
-      </view>
-      <view>
-        <text class="label">身高 cm</text>
-        <input class="input" type="digit" value="{{form.height}}" bindinput="onInput" data-field="height" />
-      </view>
-    </view>
-    <view class="field">
-      <text class="label">生日</text>
-      <picker mode="date" value="{{form.birth_date}}" bindchange="onBirthDate">
-        <view class="picker-box">{{form.birth_date || '选择生日'}}</view>
-      </picker>
-    </view>
-    <view class="field">
-      <text class="label">简介</text>
-      <textarea class="textarea" value="{{form.bio}}" bindinput="onInput" data-field="bio" />
-    </view>
-    <button class="button-primary" loading="{{saving}}" bindtap="saveProfile">保存资料</button>
-  </view>
-
-  <view class="panel section">
     <view class="row between section-title-row">
-      <view class="section-title">成就</view>
-      <view class="link" bindtap="checkAchievements">刷新</view>
+      <view class="section-title">个人资料</view>
+      <view wx:if="{{!editing}}" class="link" bindtap="startEdit">修改</view>
     </view>
-    <view wx:if="{{achievements.length}}">
-      <view class="achievement" wx:for="{{achievements}}" wx:key="id">
-        <view class="achievement-icon">{{item.icon || '★'}}</view>
-        <view class="achievement-body">
-          <view class="row between">
-            <text class="achievement-name">{{item.name}}</text>
-            <text class="muted">{{item.progress}}%</text>
-          </view>
-          <view class="muted">{{item.description}}</view>
-          <view class="progress"><view class="progress-fill" style="width: {{item.progress}}%;"></view></view>
+
+    <view wx:if="{{!editing}}" class="profile-info">
+      <view class="info-row">
+        <text class="info-label">体重</text>
+        <text class="info-value">{{profile.weight ? profile.weight + ' kg' : '未填写'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">身高</text>
+        <text class="info-value">{{profile.height ? profile.height + ' cm' : '未填写'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">生日</text>
+        <text class="info-value">{{birthDateText || '未填写'}}</text>
+      </view>
+      <view class="bio-block">
+        <text class="info-label">简介</text>
+        <view class="bio-text">{{profile.bio || '还没有写简介。'}}</view>
+      </view>
+    </view>
+
+    <view wx:else>
+      <view class="field">
+        <text class="label">头像 URL</text>
+        <input class="input" value="{{form.avatar_url}}" bindinput="onInput" data-field="avatar_url" />
+      </view>
+      <view class="field two-col">
+        <view>
+          <text class="label">体重 kg</text>
+          <input class="input" type="digit" value="{{form.weight}}" bindinput="onInput" data-field="weight" />
+        </view>
+        <view>
+          <text class="label">身高 cm</text>
+          <input class="input" type="digit" value="{{form.height}}" bindinput="onInput" data-field="height" />
         </view>
       </view>
+      <view class="field">
+        <text class="label">生日</text>
+        <picker mode="date" value="{{form.birth_date}}" bindchange="onBirthDate">
+          <view class="picker-box">{{form.birth_date || '选择生日'}}</view>
+        </picker>
+      </view>
+      <view class="field">
+        <text class="label">简介</text>
+        <textarea class="textarea" value="{{form.bio}}" bindinput="onInput" data-field="bio" />
+      </view>
+      <view class="edit-actions">
+        <button class="button-primary" loading="{{saving}}" bindtap="saveProfile">保存资料</button>
+        <button class="button-secondary" bindtap="cancelEdit">取消</button>
+      </view>
     </view>
-    <view wx:else class="empty compact">暂无成就，刷新后会初始化。</view>
+  </view>
+
+  <view class="panel menu-item section" bindtap="goAchievements">
+    <view>
+      <view class="menu-title">我的成就</view>
+      <view class="muted">查看训练里程碑和进度</view>
+    </view>
+    <view class="menu-arrow">›</view>
   </view>
 
   <button class="button-secondary logout" bindtap="logout">退出登录</button>

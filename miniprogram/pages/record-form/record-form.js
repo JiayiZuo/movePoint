@@ -2,8 +2,18 @@ const api = require('../../services/api')
 const { formatDate, toRFC3339 } = require('../../utils/format')
 
 const typeOptions = [
-  { label: '抱石', value: 'bouldering' },
-  { label: '难度攀爬', value: 'sport_climbing' }
+  {
+    label: '抱石',
+    value: 'bouldering',
+    placeholder: '例如 V3',
+    grades: ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+  },
+  {
+    label: '难度攀爬',
+    value: 'sport_climbing',
+    placeholder: '例如 5.10b',
+    grades: ['5.8', '5.9', '5.10a', '5.10b', '5.10c', '5.11a']
+  }
 ]
 
 const attemptOptions = [
@@ -12,6 +22,15 @@ const attemptOptions = [
   { label: '4-6 次', value: '4-6' },
   { label: '7 次以上', value: '7+' },
   { label: '未完成', value: 'failed' }
+]
+
+const colorOptions = [
+  { name: '白色', hex: '#f8fafc' },
+  { name: '黄色', hex: '#facc15' },
+  { name: '绿色', hex: '#22c55e' },
+  { name: '蓝色', hex: '#3b82f6' },
+  { name: '红色', hex: '#ef4444' },
+  { name: '黑色', hex: '#111827' }
 ]
 
 function nowParts(offsetMinutes = 0) {
@@ -27,14 +46,39 @@ function nowParts(offsetMinutes = 0) {
   }
 }
 
+function minutesBetween(form) {
+  const start = new Date(toRFC3339(form.startDate, form.startTime))
+  const end = new Date(toRFC3339(form.endDate, form.endTime))
+  const minutes = Math.max(0, Math.round((end.getTime() - start.getTime()) / 60000))
+  return minutes
+}
+
+function durationText(minutes) {
+  if (minutes < 60) return `${minutes} 分`
+  const hours = Math.floor(minutes / 60)
+  const rest = minutes % 60
+  return rest ? `${hours}h${rest}m` : `${hours}h`
+}
+
 Page({
   data: {
     id: '',
     loading: false,
     typeOptions,
     attemptOptions,
+    colorOptions,
+    durationOptions: [
+      { label: '45 分', value: 45 },
+      { label: '60 分', value: 60 },
+      { label: '90 分', value: 90 },
+      { label: '120 分', value: 120 }
+    ],
+    noteTemplates: ['力量不错', '指力疲劳', '脚法要更安静', '下次复盘 beta'],
+    ratingOptions: [1, 2, 3, 4, 5],
     typeIndex: 0,
     attemptIndex: 0,
+    gradeSuggestions: typeOptions[0].grades,
+    durationPreview: '90 分',
     form: {
       startDate: nowParts(-90).date,
       startTime: nowParts(-90).time,
@@ -55,9 +99,20 @@ Page({
       wx.reLaunch({ url: '/pages/login/login' })
       return
     }
+
+    if (query.type) {
+      const typeIndex = Math.max(0, typeOptions.findIndex((item) => item.value === query.type))
+      this.setData({
+        typeIndex,
+        gradeSuggestions: typeOptions[typeIndex].grades
+      })
+    }
+
     if (query.id) {
       this.setData({ id: query.id })
       this.loadRecord(query.id)
+    } else {
+      this.updateDurationPreview()
     }
   },
 
@@ -73,6 +128,7 @@ Page({
     this.setData({
       typeIndex,
       attemptIndex,
+      gradeSuggestions: typeOptions[typeIndex].grades,
       form: {
         startDate,
         startTime: `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`,
@@ -86,7 +142,7 @@ Page({
         notes: record.notes || '',
         media_urls: record.media_urls || ''
       }
-    })
+    }, () => this.updateDurationPreview())
   },
 
   onInput(e) {
@@ -94,23 +150,70 @@ Page({
   },
 
   onInputDate(e) {
-    this.setData({ [`form.${e.currentTarget.dataset.field}`]: e.detail.value })
+    this.setData({ [`form.${e.currentTarget.dataset.field}`]: e.detail.value }, () => this.updateDurationPreview())
   },
 
-  onTypeChange(e) {
-    this.setData({ typeIndex: Number(e.detail.value) })
+  selectType(e) {
+    const typeIndex = Number(e.currentTarget.dataset.index)
+    this.setData({
+      typeIndex,
+      gradeSuggestions: typeOptions[typeIndex].grades
+    })
   },
 
   onAttemptChange(e) {
-    this.setData({ attemptIndex: Number(e.detail.value) })
+    const attemptIndex = Number(e.detail.value)
+    this.setData({
+      attemptIndex,
+      'form.success': attemptOptions[attemptIndex].value !== 'failed'
+    })
   },
 
   onSwitch(e) {
-    this.setData({ 'form.success': e.detail.value })
+    const success = e.detail.value
+    const failedIndex = attemptOptions.findIndex((item) => item.value === 'failed')
+    const nextAttemptIndex = success
+      ? (this.data.attemptIndex === failedIndex ? 1 : this.data.attemptIndex)
+      : failedIndex
+    this.setData({
+      'form.success': success,
+      attemptIndex: nextAttemptIndex
+    })
   },
 
-  onSlider(e) {
-    this.setData({ 'form.rating': e.detail.value })
+  pickGrade(e) {
+    this.setData({ 'form.grade': e.currentTarget.dataset.value })
+  },
+
+  pickColor(e) {
+    this.setData({ 'form.color': e.currentTarget.dataset.value })
+  },
+
+  pickRating(e) {
+    this.setData({ 'form.rating': Number(e.currentTarget.dataset.value) })
+  },
+
+  applyDuration(e) {
+    const minutes = Number(e.currentTarget.dataset.minutes)
+    const end = new Date(toRFC3339(this.data.form.endDate, this.data.form.endTime))
+    const start = new Date(end.getTime() - minutes * 60000)
+    const date = `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, '0')}-${String(start.getDate()).padStart(2, '0')}`
+    const time = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`
+    this.setData({
+      'form.startDate': date,
+      'form.startTime': time
+    }, () => this.updateDurationPreview())
+  },
+
+  appendNote(e) {
+    const value = e.currentTarget.dataset.value
+    const notes = this.data.form.notes
+    this.setData({ 'form.notes': notes ? `${notes}；${value}` : value })
+  },
+
+  updateDurationPreview() {
+    const minutes = minutesBetween(this.data.form)
+    this.setData({ durationPreview: durationText(minutes) })
   },
 
   buildPayload() {
@@ -132,6 +235,10 @@ Page({
 
   async submit() {
     const payload = this.buildPayload()
+    if (minutesBetween(this.data.form) <= 0) {
+      wx.showToast({ title: '结束时间需要晚于开始时间', icon: 'none' })
+      return
+    }
     if (!payload.grade || !payload.location) {
       wx.showToast({ title: '请填写难度和地点', icon: 'none' })
       return

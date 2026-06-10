@@ -1,94 +1,118 @@
+.profile-page {
+  padding-bottom: 40rpx;
+}
+
 .profile-head {
   display: flex;
   align-items: center;
   gap: 24rpx;
+  background: linear-gradient(135deg, #63b8ff 0%, #2f8fe8 100%);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.profile-main {
+  min-width: 0;
 }
 
 .avatar {
   width: 112rpx;
   height: 112rpx;
   border-radius: 56rpx;
-  background: #e8f3ef;
+  background: #ffffff;
 }
 
 .avatar-fallback {
   line-height: 112rpx;
-  color: #1e6b58;
+  color: #2473ba;
   font-size: 42rpx;
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
 }
 
 .name {
   font-size: 36rpx;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .section-title {
-  margin-bottom: 24rpx;
+  color: #102033;
   font-size: 32rpx;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.section-title-row .section-title {
-  margin-bottom: 0;
+.section-title-row {
+  margin-bottom: 24rpx;
 }
 
 .two-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 16rpx;
 }
 
 .link {
-  color: #1e6b58;
+  color: #2473ba;
   font-size: 26rpx;
+  font-weight: 800;
 }
 
-.achievement {
+.profile-info {
+  border-top: 1rpx solid #d7e7f5;
+}
+
+.info-row {
   display: flex;
-  gap: 18rpx;
-  padding: 20rpx 0;
-  border-bottom: 1rpx solid #edf0f3;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #d7e7f5;
+  font-size: 28rpx;
 }
 
-.achievement:last-child {
-  border-bottom: 0;
+.info-label {
+  color: #6f8399;
 }
 
-.achievement-icon {
-  width: 56rpx;
-  height: 56rpx;
-  line-height: 56rpx;
-  border-radius: 50%;
-  background: #e8f3ef;
-  text-align: center;
+.info-value {
+  color: #102033;
+  font-weight: 800;
 }
 
-.achievement-body {
-  flex: 1;
+.bio-block {
+  padding-top: 24rpx;
 }
 
-.achievement-name {
-  font-weight: 700;
+.bio-text {
+  margin-top: 12rpx;
+  color: #263f58;
+  font-size: 28rpx;
+  line-height: 1.6;
 }
 
-.progress {
-  height: 12rpx;
-  margin-top: 14rpx;
-  overflow: hidden;
-  border-radius: 999rpx;
-  background: #eef2f6;
+.edit-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16rpx;
 }
 
-.progress-fill {
-  height: 100%;
-  border-radius: 999rpx;
-  background: #1e6b58;
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 8rpx solid #63b8ff;
 }
 
-.compact {
-  padding: 28rpx 0;
+.menu-title {
+  margin-bottom: 8rpx;
+  color: #102033;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.menu-arrow {
+  color: #2473ba;
+  font-size: 48rpx;
+  font-weight: 800;
 }
 
 .logout {

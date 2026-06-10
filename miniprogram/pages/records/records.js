@@ -69,6 +69,10 @@ Page({
     this.setData({ [e.currentTarget.dataset.field]: e.detail.value }, () => this.refresh())
   },
 
+  resetFilter() {
+    this.setData({ from: '', to: '' }, () => this.refresh())
+  },
+
   addRecord() {
     wx.navigateTo({ url: '/pages/record-form/record-form' })
   },

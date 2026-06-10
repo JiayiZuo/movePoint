@@ -54,6 +54,10 @@ Page({
     wx.navigateTo({ url: '/pages/record-form/record-form' })
   },
 
+  quickAdd(e) {
+    wx.navigateTo({ url: `/pages/record-form/record-form?type=${e.currentTarget.dataset.type}` })
+  },
+
   goRecords() {
     wx.switchTab({ url: '/pages/records/records' })
   },
