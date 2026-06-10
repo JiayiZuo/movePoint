@@ -1,0 +1,47 @@
+<view class="page">
+  <view class="section hero">
+    <view>
+      <view class="subtitle">欢迎回来</view>
+      <view class="title">{{profile.username || user.username || '攀岩者'}}</view>
+    </view>
+    <button class="quick-add" bindtap="addRecord">+</button>
+  </view>
+
+  <view class="stats-grid section">
+    <view class="stat">
+      <text class="stat-value">{{stats.total_sessions || 0}}</text>
+      <text class="stat-label">总次数</text>
+    </view>
+    <view class="stat">
+      <text class="stat-value">{{durationHours}}</text>
+      <text class="stat-label">总小时</text>
+    </view>
+    <view class="stat">
+      <text class="stat-value">{{stats.highest_grade || '-'}}</text>
+      <text class="stat-label">最高难度</text>
+    </view>
+    <view class="stat">
+      <text class="stat-value">{{stats.weekly_sessions || 0}}</text>
+      <text class="stat-label">本周</text>
+    </view>
+  </view>
+
+  <view class="section row between">
+    <view class="section-title">最近记录</view>
+    <view class="link" bindtap="goRecords">全部</view>
+  </view>
+
+  <view wx:if="{{records.length}}">
+    <view class="record panel" wx:for="{{records}}" wx:key="id" bindtap="openRecord" data-id="{{item.id}}">
+      <view class="row between">
+        <view>
+          <view class="record-grade">{{item.grade || '未填写难度'}}</view>
+          <view class="muted">{{item.location || '未填写地点'}}</view>
+        </view>
+        <view class="chip">{{item.typeText}}</view>
+      </view>
+      <view class="record-meta">{{item.startText}} · {{item.durationText}}</view>
+    </view>
+  </view>
+  <view wx:else class="panel empty">还没有记录，先添加一次攀爬。</view>
+</view>

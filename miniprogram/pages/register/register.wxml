@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="section">
+    <view class="title">创建账号</view>
+    <view class="subtitle">基础资料后续可以在个人中心继续完善。</view>
+  </view>
+
+  <view class="panel">
+    <view class="field">
+      <text class="label">用户名</text>
+      <input class="input" placeholder="3-20 个字符" value="{{form.username}}" bindinput="onInput" data-field="username" />
+    </view>
+    <view class="field">
+      <text class="label">邮箱</text>
+      <input class="input" type="text" placeholder="name@example.com" value="{{form.email}}" bindinput="onInput" data-field="email" />
+    </view>
+    <view class="field">
+      <text class="label">密码</text>
+      <input class="input" type="password" placeholder="至少 6 位" value="{{form.password}}" bindinput="onInput" data-field="password" />
+    </view>
+    <view class="field">
+      <text class="label">生日</text>
+      <picker mode="date" value="{{form.birth_date}}" bindchange="onDateChange">
+        <view class="picker-box">{{form.birth_date || '选择生日'}}</view>
+      </picker>
+    </view>
+    <button class="button-primary" loading="{{loading}}" bindtap="submit">注册并登录</button>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+.auth-page {
+  padding-top: 96rpx;
+}
+
+.brand {
+  margin-bottom: 48rpx;
+}
+
+.register-link {
+  margin-top: 20rpx;
+}

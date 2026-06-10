@@ -1,0 +1,59 @@
+.records-page {
+  padding-bottom: 44rpx;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 76rpx;
+  gap: 14rpx;
+  margin-bottom: 24rpx;
+}
+
+.filter,
+.add {
+  height: 76rpx;
+  line-height: 76rpx;
+  border-radius: 10rpx;
+  background: #ffffff;
+  border: 1rpx solid #d9dee5;
+  text-align: center;
+  font-size: 25rpx;
+}
+
+.add {
+  padding: 0;
+  color: #ffffff;
+  background: #1e6b58;
+  font-size: 42rpx;
+}
+
+.record {
+  margin-bottom: 18rpx;
+}
+
+.record-grade {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.meta {
+  margin-top: 18rpx;
+  color: #697586;
+  font-size: 24rpx;
+}
+
+.success {
+  background: #e8f3ef;
+  color: #1e6b58;
+}
+
+.failed {
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.load-more {
+  padding: 24rpx;
+  color: #1e6b58;
+  text-align: center;
+}

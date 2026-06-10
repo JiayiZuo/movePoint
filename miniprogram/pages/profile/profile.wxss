@@ -1,0 +1,96 @@
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.avatar {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 56rpx;
+  background: #e8f3ef;
+}
+
+.avatar-fallback {
+  line-height: 112rpx;
+  color: #1e6b58;
+  font-size: 42rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+.name {
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.section-title {
+  margin-bottom: 24rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.section-title-row .section-title {
+  margin-bottom: 0;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+}
+
+.link {
+  color: #1e6b58;
+  font-size: 26rpx;
+}
+
+.achievement {
+  display: flex;
+  gap: 18rpx;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #edf0f3;
+}
+
+.achievement:last-child {
+  border-bottom: 0;
+}
+
+.achievement-icon {
+  width: 56rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-radius: 50%;
+  background: #e8f3ef;
+  text-align: center;
+}
+
+.achievement-body {
+  flex: 1;
+}
+
+.achievement-name {
+  font-weight: 700;
+}
+
+.progress {
+  height: 12rpx;
+  margin-top: 14rpx;
+  overflow: hidden;
+  border-radius: 999rpx;
+  background: #eef2f6;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999rpx;
+  background: #1e6b58;
+}
+
+.compact {
+  padding: 28rpx 0;
+}
+
+.logout {
+  margin-bottom: 40rpx;
+}

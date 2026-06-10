@@ -1,0 +1,27 @@
+<view class="page records-page">
+  <view class="toolbar">
+    <picker mode="date" value="{{from}}" bindchange="onFilterDate" data-field="from">
+      <view class="filter">{{from || '开始日期'}}</view>
+    </picker>
+    <picker mode="date" value="{{to}}" bindchange="onFilterDate" data-field="to">
+      <view class="filter">{{to || '结束日期'}}</view>
+    </picker>
+    <button class="add" bindtap="addRecord">+</button>
+  </view>
+
+  <view wx:if="{{records.length}}">
+    <view class="record panel" wx:for="{{records}}" wx:key="id" bindtap="openRecord" data-id="{{item.id}}">
+      <view class="row between">
+        <view>
+          <view class="record-grade">{{item.grade || '未填写难度'}}</view>
+          <view class="muted">{{item.location || '未填写地点'}}</view>
+        </view>
+        <view class="chip {{item.success ? 'success' : 'failed'}}">{{item.success ? '完成' : '未完成'}}</view>
+      </view>
+      <view class="meta">{{item.typeText}} · {{item.attemptsText}} · {{item.durationText}} · {{item.startText}}</view>
+    </view>
+  </view>
+  <view wx:else class="panel empty">没有符合条件的记录。</view>
+
+  <view wx:if="{{hasMore}}" class="load-more" bindtap="loadMore">加载更多</view>
+</view>
